@@ -128,24 +128,29 @@ def update_data(conn):
     column = input('Ingresa el nombre de la columna que deseas modificar: ')
     new_value = input('Ingresa el nuevo valor de dicha columna: ')
 
-    sql = f'''
-        UPDATE hamburguer 
-        SET
-            {column} = ?
-        WHERE
-            rowid = ?
-    '''
-    #sql.format(column)
-    values = (new_value, rowid)
-    cursor = conn.execute(sql, values)
-    conn.commit()
+    try:
+        sql = f'''
+            UPDATE hamburguer 
+            SET
+                {column} = ?
+            WHERE
+                rowid = ?
+        '''
+        #sql.format(column)
+        values = (new_value, rowid)
+        cursor = conn.execute(sql, values)
+        conn.commit()
 
-    if cursor.rowcount < 1:
-        #error
-        print('No funciono :(')
-    else:
-        #success
-        print('Si funciono!')
+        if cursor.rowcount < 1:
+            #error
+            print('No funciono :(')
+        else:
+            #success
+            print('Si funciono!')
+    except Exception as e:
+        print('Algo salio mal durante la actualizacion :(')
+        print(e)
+        print()
 
     
 
